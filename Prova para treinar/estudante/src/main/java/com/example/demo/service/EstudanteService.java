@@ -9,7 +9,7 @@ import java.util.List;
 @Service
 public class EstudanteService {
 
-    private static EstudanteRepository estudanteRepository;
+    private final EstudanteRepository estudanteRepository;
 
     public EstudanteService(EstudanteRepository estudanteRepository) {
         this.estudanteRepository = estudanteRepository;
@@ -19,21 +19,23 @@ public class EstudanteService {
         return estudanteRepository.save(estudante);
     }
 
-    public static List<EstudanteModel> buscarTodosEstudante() {
+    public List<EstudanteModel> findAll() {
         return estudanteRepository.findAll();
     }
 
-    public void  deletarEstudante(Long id) {
+    public void deletarEstudante(Long id) {
         estudanteRepository.deleteById(id);
     }
 
     public EstudanteModel buscarId(Long id) {
-        return estudanteRepository.findById(id).get();
+        return estudanteRepository.findById(id).orElse(null);
     }
 
     public EstudanteModel atualizarEstudante(Long id, EstudanteModel estudanteModel) {
-        EstudanteModel newEstudante = estudanteRepository.findById(id).get();
-        newEstudante.setNome(estudanteModel.getNome());
-        return estudanteRepository.save(estudanteModel);
+        EstudanteModel estudante = estudanteRepository.findById(id).orElse(null);
+
+        estudante.setNome(estudanteModel.getNome());
+
+        return estudanteRepository.save(estudante);
     }
 }

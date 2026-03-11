@@ -3,10 +3,12 @@ package com.example.demo.controller;
 import com.example.demo.model.EstudanteModel;
 import com.example.demo.service.EstudanteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/estudante")
@@ -15,28 +17,49 @@ public class EstudanteController {
     @Autowired
     private EstudanteService estudanteService;
 
+    // Criar estudante
     @PostMapping
-    public EstudanteModel criarEstudante(@RequestBody EstudanteModel estudanteModel) {
-        return estudanteService.criarEstudante(estudanteModel);
+    public ResponseEntity<EstudanteModel> criarEstudante(@RequestBody EstudanteModel estudanteModel) {
+
+        EstudanteModel estudante = estudanteService.criarEstudante(estudanteModel);
+
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(estudante.getId())
+                .toUri();
+
+        return ResponseEntity.created(uri).body(estudante);
     }
 
+    // Listar todos estudantes
     @GetMapping
-    public List<EstudanteModel> buscarTodosEstudante() {
-        return EstudanteService.buscarTodosEstudante();
+    public ResponseEntity<List<EstudanteModel>> findAll() {
+        List<EstudanteModel> requeste = estudanteService.findAll();
+        return ResponseEntity.ok(requeste);
     }
 
-    @DeleteMapping("/{id}")
-    public void deletarEstudante(@PathVariable Long id) {
-        estudanteService.deletarEstudante(id);
-    }
-
+    // Buscar estudante por id
     @GetMapping("/{id}")
-    public Optional<EstudanteModel> buscarId(@PathVariable Long id) {
-        return Optional.ofNullable(estudanteService.buscarId(id));
+    public ResponseEntity<EstudanteModel> buscarId(@PathVariable Long id) {
+        EstudanteModel estudante = estudanteService.buscarId(id);
+        return ResponseEntity.ok(estudante);
     }
 
-    @PutMapping
-    public EstudanteModel atualizarEstudante(@PathVariable Long id,@RequestBody EstudanteModel estudanteModel) {
-        return estudanteService.atualizarEstudante(id, estudanteModel);
+    // Atualizar estudante
+    @PutMapping("/{id}")
+    public ResponseEntity<EstudanteModel> atualizarEstudante(
+            @PathVariable Long id,
+            @RequestBody EstudanteModel estudanteModel) {
+
+        EstudanteModel estudanteAtualizado = estudanteService.atualizarEstudante(id, estudanteModel);
+        return ResponseEntity.ok(estudanteAtualizado);
+    }
+
+    // Deletar estudante
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deletarEstudante(@PathVariable Long id) {
+        estudanteService.deletarEstudante(id);
+        return ResponseEntity.noContent().build();
     }
 }
