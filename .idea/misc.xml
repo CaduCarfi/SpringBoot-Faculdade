@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/Aula03/school/pom.xml" />
+        <option value="$PROJECT_DIR$/Aula04/hora-do-vamo-ve/milagre/pom.xml" />
+        <option value="$PROJECT_DIR$/Aula 01/demo/demo/pom.xml" />
+        <option value="$PROJECT_DIR$/Aula 02/pom.xml" />
+        <option value="$PROJECT_DIR$/ArrumarErros/teste-prova-lagrimaAlunos/java-spring-boot/demo/pom.xml" />
+        <option value="$PROJECT_DIR$/Prova para treinar/estudante/pom.xml" />
+        <option value="$PROJECT_DIR$/BibliotecaSpringBoot/biblioteca/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_24" default="true" project-jdk-name="24" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>
